@@ -1,6 +1,6 @@
 """
 Title: Doubly Linked List
-Description: Implement the primitive operations of a doubly linked list
+Description: Implements the primitive operations of a doubly linked list
 """
 
 # This defines the node class.
@@ -80,6 +80,7 @@ class DoublyLinkedList:
             curr.next.next.prev = curr.next
 
         self.length += 1
+        return "Value inserted!"
 
     #This deletes the first node whose value matches the key.
     def DeleteAny(self, key):
@@ -106,6 +107,7 @@ class DoublyLinkedList:
             else:
                 curr.next.prev = curr.prev
         self.length -= 1 
+        return "Value deleted!"
 
     #This displays the list starting at its head.
     def DisplayForward(self):
@@ -115,11 +117,12 @@ class DoublyLinkedList:
         curr = self.first
         result = ""
         while curr is not None:
-            result += f"{curr.value} ->"
+            result += f"{curr.value} -> "
             curr = curr.next
         result = result[:-3]
 
         return result
+    
     #This displays the list starting at its tail.
     def DisplayBackward(self):
         if self.IsEmptyList():
@@ -128,11 +131,67 @@ class DoublyLinkedList:
         curr = self.last
         result = ""
         while curr is not None:
-            result += f"{curr.value} ->"
+            result += f"{curr.value} -> "
             curr = curr.prev
         result = result[:-3]
 
         return result
 
+def InputValidation(userInput, upperBound):
+    while userInput < 1 or userInput > upperBound:
+        userInput = int(input(f"Please enter a value between 1 and {upperBound}: "))
+    return userInput
 
+def main():
+    list = DoublyLinkedList()
+    exit = "N"
+    print("Hello, welcome to the Doubly Linked List program!")
+    while(exit.upper() != "Y"):
+        print("\n")
+                  
+        print("""Please select an option.
+        MENU:
+            1. Prepend a value to the start of the list
+            2. Append a value at the end of the list
+            3. Remove the first element in the list
+            4. Remove the last element in the list
+            5. Insert after a specific element in the list
+            6. Delete a specific element in the list
+            7. Display the list starting at the first element
+            8. Display the list starting at the last element
+            9. Exit
+            """)
 
+        choice = int(input("Please select an option(1-9): "))
+        valChoice = InputValidation(choice, 9)
+
+        match valChoice:
+            case 1:
+                value = int(input("Please enter a value: "))
+                list.Prepend(value)
+            case 2:
+                value = int(input("Please enter a value: "))
+                list.Append(value)
+            case 3:
+                print("Here is the removed value: ", list.RemoveFirst())
+            case 4:
+                print("Here is the removed value: ", list.RemoveLast())
+            case 5:
+                target = int(input("Please enter the value you want to insert after: "))
+                value = int(input("Please enter a value: "))
+                print(list.InsertAfterAny(target, value))
+            case 6:
+                target = int(input("Please enter the value you want to delete: "))
+                print(list.DeleteAny(target))
+            case 7:
+                print(list.DisplayForward())
+            case 8:
+                print(list.DisplayBackward())
+            case 9:
+                exit = input("Would you like to exit this program? (Y/N): ")
+
+        print("\n")
+    print("Thank you for using this program!")
+                            
+     
+main()
